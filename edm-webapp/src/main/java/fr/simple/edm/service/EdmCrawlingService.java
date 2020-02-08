@@ -56,7 +56,7 @@ public class EdmCrawlingService {
 
         int pageSize = 10;
 
-        Pageable pageRequest = new PageRequest(0, pageSize);
+        Pageable pageRequest = PageRequest.of(0, pageSize);
         Page<EdmDocumentFile> edmDocumentPage = edmDocumentRepository.findBySourceId(sourceId, pageRequest);
 
         while (edmDocumentPage.getSize() > 0) {

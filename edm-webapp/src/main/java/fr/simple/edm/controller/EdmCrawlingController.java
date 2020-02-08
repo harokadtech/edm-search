@@ -40,7 +40,7 @@ public class EdmCrawlingController {
     @ResponseBody
     public String crawlFilesystem(
         @RequestParam(value = "path") String path,
-        @RequestParam(value = "edmServerHttpAddress", defaultValue = "http://localhost:8053") String edmServerHttpAddress,
+        @RequestParam(value = "edmServerHttpAddress", defaultValue = "http://localhost:8080") String edmServerHttpAddress,
         @RequestParam(value = "sourceName", defaultValue = "unmanned source") String sourceName,
         @RequestParam(value = "categoryName", defaultValue = "unmanned category") String categoryName,
         @RequestParam(value = "exclusionRegex", defaultValue = "") String exclusionRegex
@@ -63,7 +63,7 @@ public class EdmCrawlingController {
     @ResponseBody
     public String crawlFilesystemSubdirectories(
         @RequestParam(value = "path") String path,
-        @RequestParam(value = "edmServerHttpAddress", defaultValue = "http://localhost:8053") String edmServerHttpAddress,
+        @RequestParam(value = "edmServerHttpAddress", defaultValue = "http://localhost:8080") String edmServerHttpAddress,
         @RequestParam(value = "exclusionRegex", defaultValue = "") String exclusionRegex
     ) {
         log.info("[crawlFilesystem] Starting crawling on path : '{}'  (exclusion = '{}')", path, exclusionRegex);
@@ -93,7 +93,7 @@ public class EdmCrawlingController {
     @ResponseBody
     public String crawlUrl(
         @RequestParam(value = "url") String url,
-        @RequestParam(value = "edmServerHttpAddress", defaultValue = "http://localhost:8053") String edmServerHttpAddress,
+        @RequestParam(value = "edmServerHttpAddress", defaultValue = "http://localhost:8080") String edmServerHttpAddress,
         @RequestParam(value = "sourceName", defaultValue = "unmanned source") String sourceName,
         @RequestParam(value = "categoryName", defaultValue = "unmanned category") String categoryName,
         @RequestParam(value = "exclusionRegex", defaultValue = "") String exclusionRegex

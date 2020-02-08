@@ -128,7 +128,7 @@ public class EdmDocumentService {
                 .highlighter(highlightBuilder)
                 .execute().actionGet();
 
-            searchResult.setTookTime(searchResponse.getTookInMillis());
+           // searchResult.setTookTime(searchResponse.getTookInMillis());
             searchResult.setTotalHitsCount(searchResponse.getHits().getTotalHits());
 
             SearchHits hits = searchResponse.getHits();

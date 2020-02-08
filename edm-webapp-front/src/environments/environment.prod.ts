@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  sdsApiBaseUrl: 'http://localhost'
+  sdsApiBaseUrl: 'http://localhost:8080'
 };

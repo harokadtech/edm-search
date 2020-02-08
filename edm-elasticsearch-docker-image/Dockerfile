@@ -1,6 +1,6 @@
 FROM docker.elastic.co/elasticsearch/elasticsearch:5.6.4
 
-ENV ES_HOST http://127.0.0.1:9200
+ENV ES_HOST http://localhost:8228
 
 USER elasticsearch
 
