@@ -78,7 +78,7 @@ public class EdmCrawlingController {
             for (String directory : directories) {
                 log.debug("crawling directory {}", directory);
                 String sanitizedSourceName = (path + "/" + directory).replaceAll(" ", "_").replaceAll("/", "_");
-                String categoryName = FilenameUtils.getBaseName(directory);
+                String categoryName = directory; //FilenameUtils.getBaseName(directory);
                 FilesystemCrawler.importFilesInDir(path + "/" + directory, edmServerHttpAddress, sanitizedSourceName, categoryName, exclusionRegex);
             }
 

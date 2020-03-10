@@ -16,7 +16,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
                 <executions>
-                    <execution>
+                    <!--execution>
                         <id>install npm dependencies</id>
                         <phase>compile</phase>
                         <goals>
@@ -28,7 +28,7 @@
                                 <argument>install</argument>
                             </arguments>
                         </configuration>
-                    </execution>
+                    </execution-->
                     <execution>
                         <id>compile angular code</id>
                         <phase>compile</phase>
@@ -36,25 +36,25 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>ng</executable>
+                            <executable>npm</executable>
                             <arguments>
+                                <argument>run</argument>
                                 <argument>build</argument>
-                                <argument>--prod</argument>
                             </arguments>
                         </configuration>
                     </execution>
                      <execution>
                         <id>test angular code</id>
-                        <phase>test</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
                             <skip>${skipTests}</skip>
-                            <executable>ng</executable>
+                            <executable>npm</executable>
                             <arguments>
-                                <argument>test</argument>
-                                <argument>--watch=false</argument>
+                                <argument>run</argument>
+                                <argument>testci</argument>
                             </arguments>
                         </configuration>
                     </execution>

@@ -80,14 +80,13 @@ public class EdmAggregationsService {
 
     private EdmAggregationsWrapper getAggregationExtensions(String relativeWordSearch) {
         QueryBuilder query = getEdmQueryForPattern(relativeWordSearch);
-        TermsAggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg_fileExtension").field("fileExtension").size(FILE_EXTENSIONS_MAX_COUNT);
+        TermsAggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg_fileExtension").field("fileExtension.keyword").size(FILE_EXTENSIONS_MAX_COUNT);
 
         try {
             SearchResponse response = elasticsearchClient.prepareSearch("document_file").setTypes("document_file")
                 .setQuery(query)
                 .addAggregation(aggregationBuilder)
                 .execute().actionGet();
-
             Terms terms = response.getAggregations().get("agg_fileExtension");
 
             return new EdmAggregationsWrapper(
@@ -104,7 +103,7 @@ public class EdmAggregationsService {
 
         return new EdmAggregationsWrapper();
     }
-
+  
     private EdmAggregationsWrapper getAggregationDate(String relativeWordSearch) {
         QueryBuilder query = getEdmQueryForPattern(relativeWordSearch);
         DateRangeAggregationBuilder aggregationBuilder = AggregationBuilders.dateRange("agg_date").field("fileDate");
@@ -152,11 +151,18 @@ public class EdmAggregationsService {
             .map(edmBasicAggregationItem -> edmBasicAggregationItem.getKey())
             .collect(joining("|"));
 
-        TermsAggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg_nodePath")
-            .field("nodePath.simple")
-            .includeExclude(new IncludeExclude(null, new RegExp(edmTopTermsExlusionRegex + "|" + filesExtensions)))
-            .size(TOP_TERMS_MAX_COUNT);
+			String myRegex = filesExtensions;
+			if(edmTopTermsExlusionRegex !=null && !edmTopTermsExlusionRegex.isEmpty()){
+				myRegex = edmTopTermsExlusionRegex + "|" + myRegex;
+			} else {
+				log.warn("####### myRegex NO terms  = ## " + myRegex);
+			}
+
         try {
+			TermsAggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg_nodePath")
+            .field("nodePath.simple")
+            .includeExclude(new IncludeExclude(null, new RegExp(myRegex)))
+            .size(TOP_TERMS_MAX_COUNT);
             // execute
             SearchResponse response = elasticsearchClient.prepareSearch("document_file").setTypes("document_file")
                 .setQuery(query)
@@ -186,7 +192,7 @@ public class EdmAggregationsService {
         QueryBuilder query = getEdmQueryForPattern(relativeWordSearch);
 
         TermsAggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg_categoryId")
-            .field("categoryId");
+            .field("categoryId.keyword");
 
         try {
             // execute

@@ -4,9 +4,22 @@
             "sourceId": {
                 "type": "keyword"
             },
-            "categoryId": {
-                "type": "keyword"
-            },
+"categoryId": {
+"type": "text",
+"fields": {
+"keyword": {
+"type": "keyword"
+}
+}
+},
+"fileExtension": {
+"type": "text",
+"fields": {
+"keyword": {
+"type": "keyword"
+}
+}
+},
             "name": {
                 "type": "text",
                 "analyzer": "edm_analyzer_french",
@@ -24,9 +37,6 @@
             "fileDate": {
                 "type": "date",
                 "format": "year_month_day"
-            },
-            "fileExtension": {
-                "type": "keyword"
             },
             "fileContentType": {
                 "type": "keyword"
