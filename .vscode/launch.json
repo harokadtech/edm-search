@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<paperless-documents-search-webapp>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "fr.simple.edm.Application",
+            "projectName": "paperless-documents-search-webapp",
+            "args": ""
+        }
+    ]
+}

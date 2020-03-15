@@ -34,11 +34,7 @@ public class FilesystemCrawler {
         // create parents
         String categoryId = edmConnector.getIdFromCategoryByCategoryName(
             edmServerHttpAddress, categoryName);
-        String sourceId = edmConnector.getIdFromSourceBySourceName(
-            edmServerHttpAddress, sourceName, categoryId);
-
-        // index
-        log.debug("The source ID is {}", sourceId);
+        String sourceId = sourceName;
         edmConnector.notifyStartCrawling(edmServerHttpAddress, sourceName);
         _importFilesInDir(filePath, edmServerHttpAddress, sourceId, categoryId, exclusionRegex, exploreSubdirectories, true);
         edmConnector.notifyEndOfCrawling(edmServerHttpAddress, sourceName);
@@ -57,6 +53,14 @@ public class FilesystemCrawler {
         log.debug("Check if '{}' match with '{}' : {}", filePath,
             exclusionPattern, toExclude);
         return toExclude;
+    }
+
+    public static boolean isIncluded(String filePath, String inclusionPattern) {
+        boolean toInclude = !inclusionPattern.isEmpty()
+            && Pattern.compile(inclusionPattern).matcher(filePath).find();
+        log.debug("Check if '{}' match with '{}' : {}", filePath,
+            inclusionPattern, toInclude);
+        return toInclude;
     }
 
     private static void _importFilesInDir(String filePath, final String edmServerHttpAddress,
@@ -91,7 +95,17 @@ public class FilesystemCrawler {
         // add files
         if (file != null && file.isFile()) {
             log.debug("... is a file !");
-
+            String fName = FilenameUtils.removeExtension(file.getName());
+            String sourceName = sourceId;
+            String[] split = fName.split("_");
+            if(split.length==3){
+                sourceName = split[2];
+                log.debug("The sourceName  {}", sourceName );
+            }
+            String mySourceId = edmConnector.getIdFromSourceBySourceName(
+                edmServerHttpAddress, sourceName, categoryId);
+            // index
+            log.debug("The source ID is {}", mySourceId);
             double bytes = file.length();
             double kilobytes = bytes / 1024;
             double megabytes = kilobytes / 1024;
@@ -102,10 +116,17 @@ public class FilesystemCrawler {
                 // construct DTO
                 EdmDocumentFile document = new EdmDocumentFile();
                 document.setFileDate(new Date(file.lastModified()));
-                document.setNodePath(filePath.replaceAll("\\\\", "/"));
-                document.setSourceId(sourceId);
+                if(!sourceId.equals(mySourceId)){
+                    int year = Integer.parseInt(sourceName);
+                    Date fileDate = new Date(year, 1, 1);
+                    document.setFileDate(fileDate);
+                }
+                String nodePath = filePath.replaceAll("\\\\", "/");
+                nodePath = nodePath.replaceAll("/var/nc_data/", ""); 
+                document.setNodePath(nodePath);
+                document.setSourceId(mySourceId);
                 document.setCategoryId(categoryId);
-                document.setName(FilenameUtils.removeExtension(file.getName()));
+                document.setName(fName);
                 document.setFileExtension(FilenameUtils.getExtension(filePath).toLowerCase());
 
                 // save DTO

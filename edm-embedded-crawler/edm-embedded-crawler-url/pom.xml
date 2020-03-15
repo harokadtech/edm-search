@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>paperless-documents-search-embedded-crawler-url</artifactId>
-    <name>Filesystem crawler</name>
+    <name>Url crawler</name>
 
     <dependencies>
 
