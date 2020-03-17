@@ -239,7 +239,7 @@ public class FilesystemCrawler {
                 log.warn("Skipping too big file ({})", filePath);
             } else {
                 Date fileDate = new Date(file.lastModified()); 
-                int idx = fName.indexOf("_Bordereaux Analytiques");
+                int idx = fName.indexOf("_Bordereaux Analytiques.pdf");
                 if(idx > 0){
                     String year = fName.substring(idx-4, idx);
                     Calendar cal2 = new GregorianCalendar(Integer.parseInt(year) , Calendar.JULY, 15);
