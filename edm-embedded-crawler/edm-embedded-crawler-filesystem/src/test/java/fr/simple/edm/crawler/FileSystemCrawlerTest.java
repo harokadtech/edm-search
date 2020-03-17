@@ -42,7 +42,7 @@ public class FileSystemCrawlerTest {
     public void generateTF() throws Exception {
         final String filePath = "D:/devCode/generate/template.doc";
 
-        FilesystemCrawler.generateTF(filePath, 20);
+        FilesystemCrawler.generateTF(filePath, 30);
 
         assertThat(filePath).isNotEmpty();
     }

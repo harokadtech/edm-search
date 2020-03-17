@@ -89,7 +89,7 @@ public class FilesystemCrawler {
     private static String[] noms = "HAMA|AMADOU|SOULEYMANE|SAMAILA|SAIDOU|MOURTALA|MAHAMADOU|AMADOU|IBRAHIM|BOUBACAR|IBRAHIM|TAHIROU|ISSAKA|HAMANI|MAHAMANE|MOUNKAILA|ABDOU|OUSEINI|SOULEYMANE|AMADOU|SALEY|ABOUBACAR|SEYDOU|HASSANE|OUMAROU|MOUSSA|ADAMOU|ALI|ISSOUFOU|SOUMANA"
             .split("\\|");
 
-    private static String[] quartiers = "Koira Kano|Yantala|Maourey|Plateau|Boukoki|Terminus|Bani Fandou|Gaweye".split("\\|");
+    private static String[] quartiers = "Koira Kano|Yantala|Maourey|Plateau|Bani Fandou|Gaweye".split("\\|");
     private static String[] prenoms = "Seydou|Aichatou|Abass|Kadri|KarimOU|Hadiza|Abdoulaye|Aboubacar|Aboubacar|Adamou|Alfari|Ali|Ali|Amadou|Balkissa|Fatouma|Djibo|Bachir|Kiari|Boubacar|Boureima|Chefou|Daouda|Djibo|Djibrilla|Ramatou|Garba|Hamadou|Hamani|Hamidou|Bachir"
             .split("\\|");
     private static String quartier;
@@ -113,7 +113,7 @@ public class FilesystemCrawler {
                 // log.debug("... is a file !"+cont);
                 File tfFile;
                 for (int kk = 0; kk < count; kk++) {
-                    int year = rand(2000, 2019);
+                    int year = rand(1990, 2019);
                     quartier = quartiers[rand(0, quartiers.length - 1)];
                     String nom = noms[rand(0, noms.length - 1)];
                     String prenom = prenoms[rand(0, prenoms.length - 1)];
@@ -121,11 +121,10 @@ public class FilesystemCrawler {
                     tfnum = "" + rand(16200, 98000);
 
                     Calendar cal2 = new GregorianCalendar(year, Calendar.DECEMBER, 15);
-                    int days = rand(0, 60);
-                    cal2.add(Calendar.DAY_OF_MONTH, days);
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     strDateV = formatter.format(cal2.getTime());
-
+                    int days = rand(0, 30);
+                    cal2.add(Calendar.DAY_OF_MONTH, days);
                     Date fileDate = cal2.getTime();
                     strDate = formatter.format(fileDate);
                     ilot = "" + rand(1, 9);
@@ -228,11 +227,7 @@ public class FilesystemCrawler {
             log.debug("... is a file !");
             String fName = FilenameUtils.removeExtension(file.getName());
             String sourceName = sourceId;
-            String[] split = fName.split("_");
-            if (split.length == 3) {
-                sourceName = split[2];
-                log.debug("The sourceName  {}", sourceName);
-            }
+ 
             String mySourceId = edmConnector.getIdFromSourceBySourceName(edmServerHttpAddress, sourceName, categoryId);
             // index
             log.debug("The source ID is {}", mySourceId);
@@ -243,12 +238,19 @@ public class FilesystemCrawler {
             if (megabytes > 100) {
                 log.warn("Skipping too big file ({})", filePath);
             } else {
-
+                Date fileDate = new Date(file.lastModified()); 
+                int idx = fName.indexOf("_Bordereaux Analytiques");
+                if(idx > 0){
+                    String year = fName.substring(idx-4, idx);
+                    Calendar cal2 = new GregorianCalendar(Integer.parseInt(year) , Calendar.JULY, 15);
+                    int days = rand(0, 30);
+                    cal2.add(Calendar.DAY_OF_MONTH, days);
+                    fileDate = cal2.getTime();
+                }
                 // construct DTO
                 EdmDocumentFile document = new EdmDocumentFile();
-                document.setFileDate(new Date(file.lastModified()));
+                document.setFileDate(fileDate);
                 String nodePath = filePath.replaceAll("\\\\", "/");
-                nodePath = nodePath.replaceAll("/var/nc_data/ncloudadmin", "");
                 document.setNodePath(nodePath);
                 document.setSourceId(mySourceId);
                 document.setCategoryId(categoryId);
