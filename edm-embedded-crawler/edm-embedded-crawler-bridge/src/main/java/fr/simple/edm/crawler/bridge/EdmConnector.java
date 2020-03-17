@@ -99,6 +99,9 @@ public class EdmConnector {
 
         // else, we have to create it
         currentEdmCategoryColorIndex++;
+        if (currentEdmCategoryColorIndex == edmCategoryColor.size()) {
+            currentEdmCategoryColorIndex = 0;
+        }
         EdmCategory category = new EdmCategory();
         category.setDescription("");
         category.setName(categoryName);
