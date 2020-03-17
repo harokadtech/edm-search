@@ -17,6 +17,7 @@ import { PdsAggregationsModel } from '../models/pds-aggregations.model';
 import { PdsAggregationResultModel, PdsAggregationResultModelAdditionalFields } from '../models/pds-aggregation-item.model';
 import { PdsCategoryAggregationsModel } from '../models/pds-category-aggregations.model';
 import { PdsCategoryAggregationResultModel } from '../models/pds-category-aggregation-item.model';
+import { PdsSearchResultItemModel } from '../models/pds-search-result-item.model';
 
 @Component({
   selector: 'pds-page-search',
@@ -56,6 +57,10 @@ export class PdsPageSearchComponent implements OnInit {
     return this.sdsDocumentService.getDocumentLink(edmDocument);
   }
 
+  truncatePath(resultItem: PdsSearchResultItemModel) {
+    let path =  resultItem.highlightedNodePath || resultItem.edmDocument.nodePath ;
+    return path.replace('/var/nc_data/ncloudadmin/files','');
+  }
   getDocumentIcon(edmDocument: PdsDocumentModel) {
     return this.sdsDocumentService.getDocumentIcon(edmDocument);
   }

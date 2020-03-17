@@ -22,7 +22,18 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
-
+<!-- https://search.maven.org/remotecontent?filepath=org/apache/poi/poi/4.1.0/poi-4.1.0.jar -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>4.1.0</version>
+</dependency>
+<!-- https://search.maven.org/remotecontent?filepath=org/apache/poi/poi-scratchpad/4.1.0/poi-scratchpad-4.1.0.jar -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi-scratchpad</artifactId>
+    <version>4.1.0</version>
+</dependency>
         <!-- junit -->
 
         <dependency>

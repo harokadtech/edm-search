@@ -10,31 +10,41 @@ public class FileSystemCrawlerTest {
 
     @Test
     public void emptyPatternShouldNotExcludeDoc() throws Exception {
-        String exclusionRegex = "";
-        String filePath = "/data/project/.git/config";
+        final String exclusionRegex = "";
+        final String filePath = "/data/project/.git/config";
 
-        boolean isExcluded = FilesystemCrawler.isExcluded(filePath, exclusionRegex);
+        final boolean isExcluded = FilesystemCrawler.isExcluded(filePath, exclusionRegex);
 
         assertThat(isExcluded).isFalse();
     }
 
     @Test
     public void pathWithExcludedRegexShouldBeIgnored() throws Exception {
-        String exclusionRegex = "\\.git";
-        String filePath = "/data/project/.git/config";
+        final String exclusionRegex = "\\.git";
+        final String filePath = "/data/project/.git/config";
 
-        boolean isExcluded = FilesystemCrawler.isExcluded(filePath, exclusionRegex);
+        final boolean isExcluded = FilesystemCrawler.isExcluded(filePath, exclusionRegex);
 
         assertThat(isExcluded).isTrue();
     }
 
     @Test
     public void pathWithoutExcludedRegexShouldBeIgnored() throws Exception {
-        String exclusionRegex = "\\.svn";
-        String filePath = "/data/project/.git/config";
+        final String exclusionRegex = "\\.svn";
+        final String filePath = "/data/project/.git/config";
 
-        boolean isExcluded = FilesystemCrawler.isExcluded(filePath, exclusionRegex);
+        final boolean isExcluded = FilesystemCrawler.isExcluded(filePath, exclusionRegex);
 
         assertThat(isExcluded).isFalse();
     }
+
+    @Test
+    public void generateTF() throws Exception {
+        final String filePath = "D:/devCode/generate/template.doc";
+
+        FilesystemCrawler.generateTF(filePath, 20);
+
+        assertThat(filePath).isNotEmpty();
+    }
+
 }

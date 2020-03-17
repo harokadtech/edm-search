@@ -51,7 +51,7 @@
         </mat-card-title>
         <mat-card-subtitle>
           <a class="doc-link" [href]="linkToDocument(sdsSearchResultItem.edmDocument)">
-            <span [innerHTML]="sdsSearchResultItem.highlightedNodePath || sdsSearchResultItem.edmDocument.nodePath"></span>
+            <span [innerHTML]="truncatePath(sdsSearchResultItem)"></span>
           </a>
         </mat-card-subtitle>
       </mat-card-header>

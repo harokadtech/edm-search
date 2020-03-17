@@ -69,7 +69,7 @@ public class EdmCrawlingController {
         log.info("[crawlFilesystem] Starting crawling on path : '{}'  (exclusion = '{}')", path, exclusionRegex);
         try {
             // crawl root files
-            String rootSanitizedSourceName = "1900"; //path.replaceAll(" ", "_").replaceAll("/", "_");
+            String rootSanitizedSourceName = "Niamey"; //path.replaceAll(" ", "_").replaceAll("/", "_");
             String rootCategoryName = "Niamey";//FilenameUtils.getBaseName(path);
             FilesystemCrawler.importFilesInDir(path, edmServerHttpAddress, rootSanitizedSourceName, rootCategoryName, exclusionRegex, false);
 
