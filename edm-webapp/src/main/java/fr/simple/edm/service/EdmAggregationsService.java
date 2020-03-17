@@ -108,12 +108,14 @@ public class EdmAggregationsService {
         QueryBuilder query = getEdmQueryForPattern(relativeWordSearch);
         DateRangeAggregationBuilder aggregationBuilder = AggregationBuilders.dateRange("agg_date").field("fileDate");
 
-        // last month
-        aggregationBuilder.addUnboundedFrom("last_month", "now-1M/M");
+        // last_25_years
+        aggregationBuilder.addUnboundedFrom("last_25_years", "now-300M/M");
         // last 2 months
-        aggregationBuilder.addUnboundedFrom("last_2_months", "now-2M/M");
-        // last 6 months
-        aggregationBuilder.addUnboundedFrom("last_6_months", "now-6M/M");
+       // aggregationBuilder.addUnboundedFrom("last_2_months", "now-2M/M");
+        // last_10_years
+        aggregationBuilder.addUnboundedFrom("last_10_years", "now-120M/M");
+        // last_5_years
+        aggregationBuilder.addUnboundedFrom("last_5_years", "now-60M/M");
         // last year
         aggregationBuilder.addUnboundedFrom("last_year", "now-12M/M");
         // until now

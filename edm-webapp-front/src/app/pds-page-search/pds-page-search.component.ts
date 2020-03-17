@@ -119,21 +119,21 @@ export class PdsPageSearchComponent implements OnInit {
     .subscribe((globalAggregations: PdsGlobalAggregationsWrapperModel) => {
       for (const aggregate of globalAggregations.fileDate.aggregates) {
         switch (aggregate.key) {
+          case 'last_25_years':
+          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Depuis 25 ans');
+          aggregate.pdsAggregationItem.filterValue = 300;
+          break;
+          case 'last_10_years':
+          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Depuis 10 ans');
+          aggregate.pdsAggregationItem.filterValue = 120;
+          break;
+          case 'last_5_years':
+          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Depuis 5 ans');
+          aggregate.pdsAggregationItem.filterValue = 60;
+          break;
           case 'last_year':
-          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Depuis l\'année dernière');
+          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Année courante');
           aggregate.pdsAggregationItem.filterValue = 12;
-          break;
-          case 'last_6_months':
-          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Depuis les 6 derniers mois');
-          aggregate.pdsAggregationItem.filterValue = 6;
-          break;
-          case 'last_2_months':
-          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Depuis les 2 derniers mois');
-          aggregate.pdsAggregationItem.filterValue = 2;
-          break;
-          case 'last_month':
-          aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Durant le mois qui vient de s\'écouler');
-          aggregate.pdsAggregationItem.filterValue = 1;
           break;
           case 'until_now':
           aggregate.pdsAggregationItem = new PdsAggregationResultModelAdditionalFields('Jusqu\'à maintenant');

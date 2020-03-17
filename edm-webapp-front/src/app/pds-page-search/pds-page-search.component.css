@@ -18,8 +18,16 @@
 }
 
 .text-search-info {
-  text-align: right;
   margin-bottom: 10px;
+}
+
+.mat-card {
+  padding: 12px;
+}
+
+.highlighted-box {
+  border: 1px solid darkgrey;
+  padding: 4px;
 }
 
 mat-card {
