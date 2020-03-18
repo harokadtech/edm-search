@@ -243,6 +243,7 @@ public class FilesystemCrawler {
                 if(idx > 0){
                     String year = fName.substring(idx-4, idx);
                     Calendar cal2 = new GregorianCalendar(Integer.parseInt(year) , Calendar.JULY, 15);
+                    log.warn("Got year" + year + " from file{}", fName);
                     int days = rand(0, 30);
                     cal2.add(Calendar.DAY_OF_MONTH, days);
                     fileDate = cal2.getTime();

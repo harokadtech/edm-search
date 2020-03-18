@@ -98,4 +98,9 @@ public class EdmCrawlingService {
         // reset map to be sur new ids won't be deleted
         sourceDocumentsIds.put(sourceId, new ArrayList<String>());
     }
+
+    public void deleteAllDocuments() {
+        log.debug("Deleting All documents");
+        edmDocumentRepository.deleteAll();
+    }
 }

@@ -5,7 +5,6 @@ import fr.simple.edm.crawler.url.UrlCrawler;
 import fr.simple.edm.domain.EdmDocumentFile;
 import fr.simple.edm.service.EdmCrawlingService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -68,13 +67,16 @@ public class EdmCrawlingController {
     ) {
         log.info("[crawlFilesystem] Starting crawling on path : '{}'  (exclusion = '{}')", path, exclusionRegex);
         try {
+            String[] directories = new File(path).list((current, name) -> new File(current, name).isDirectory());
+            if(directories.length>0){ // If has subdirs then, do clean index
+                edmCrawlingService.deleteAllDocuments();
+            }
             // crawl root files
             String rootSanitizedSourceName = "Niamey"; //path.replaceAll(" ", "_").replaceAll("/", "_");
             String rootCategoryName = "Niamey";//FilenameUtils.getBaseName(path);
             FilesystemCrawler.importFilesInDir(path, edmServerHttpAddress, rootSanitizedSourceName, rootCategoryName, exclusionRegex, false);
 
             // crawl each subdirectory
-            String[] directories = new File(path).list((current, name) -> new File(current, name).isDirectory());
             for (String directory : directories) {
                 log.debug("crawling directory {}", directory);
                 String sanitizedSourceName = (path + "/" + directory).replaceAll(" ", "_").replaceAll("/", "_");
